@@ -1,35 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ContactList from './components/ContactList';
-import ContactCards from './components/ContactCards';
-import ContactDetail from './components/ContactDetail';
+import ContactPinned from './components/ContactPinned';
 import Header from './components/Header';
-import contacts from './data/contacts';
+import contacts from './data/contacts.json';
 import './ContactList.css';
 
 const App = () => {
-  const [isCardView, setIsCardView] = useState(false);
   const [highlightedContact, setHighlightedContact] = useState(null);
 
-  const toggleView = () => {
-    setIsCardView(!isCardView);
-  };
-
-  const handleContactClick = (contact) => {
-    setHighlightedContact(contact);
+  const handleClearContact = () => {
+    setHighlightedContact(null);
   };
 
   return (
     <div>
       <Header />
-      <button onClick={toggleView}>
-        {isCardView ? 'Switch to List View' : 'Switch to Card View'}
-      </button>
-      {isCardView ? (
-        <ContactCards contacts={contacts} onContactClick={handleContactClick} />
-      ) : (
-        <ContactList contacts={contacts} onContactClick={handleContactClick} />
+      <ContactList contacts={contacts} onSelectContact={setHighlightedContact} />
+      {highlightedContact && (
+        <ContactPinned contact={highlightedContact} onClearContact={handleClearContact} />
       )}
-      {highlightedContact && <ContactDetail contact={highlightedContact} />}
     </div>
   );
 };
