@@ -1,36 +1,41 @@
 .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-    justify-content: center; /* Centra los cards horizontalmente */
-    padding-top: 5em; /* Añade espacio para el header fijo */
-  }
-  
-  .card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1em;
-    width: 200px;
-    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra la lista horizontalmente */
-    padding-top: 5em; /* Añade espacio para el header fijo */
-  }
-  
-  .list-container ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .list-container li {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1em;
-    width: 200px;
-    margin-bottom: 1em;
-    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: center;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1em;
+  width: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 5em; /* Añade espacio para el header fijo */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+li {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  width: 100%;
+}
+
+li:hover {
+  transform: scale(1.05);
+}
