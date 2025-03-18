@@ -1,13 +1,11 @@
-
-
 const ContactItem = ({ contact, onSelectContact }) => {
   return (
     <li className="card">
-      <p>Name: {contact.name}</p>
-      <p>Phone: {contact.phone}</p>
+      <p>Nombre: {contact.fullname}</p>
+      <p>Teléfono: {contact.phonenumber}</p>
       <p>Email: {contact.email}</p>
-      <p>Type: {contact.type}</p>
-      <button onClick={() => onSelectContact(contact)}>Select</button>
+      <p>Tipo: {contact.type}</p>
+      <button onClick={() => onSelectContact(contact)}>Seleccionar</button>
     </li>
   );
 };

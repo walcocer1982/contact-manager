@@ -3,12 +3,12 @@ import React from 'react';
 const ContactPinned = ({ contact, onClearContact }) => {
   return (
     <div>
-      <h2>Pinned Contact</h2>
-      <p>Name: {contact.name}</p>
-      <p>Phone: {contact.phone}</p>
+      <h2>Contacto Fijado</h2>
+      <p>Nombre: {contact.fullname}</p>
+      <p>Teléfono: {contact.phonenumber}</p>
       <p>Email: {contact.email}</p>
-      <p>Type: {contact.type}</p>
-      <button onClick={onClearContact}>Clear</button>
+      <p>Tipo: {contact.type}</p>
+      <button onClick={onClearContact}>Limpiar</button>
     </div>
   );
 };

@@ -1,26 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const ContactForm = ({ onAddContact }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
+    fullname: '',
+    phonenumber: '',
     email: '',
-    type: 'personal'
+    type: 'social'
   });
 
   const [errors, setErrors] = useState({
-    name: '',
-    phone: '',
-    email: ''
+    fullname: '',
+    phonenumber: '',
+    email: '',
+    type: ''
   });
-
-  const [isFormValid, setIsFormValid] = useState(false);
 
   const validateField = (name, value) => {
     switch (name) {
-      case 'name':
+      case 'fullname':
         return value.length < 3 ? 'El nombre debe tener al menos 3 caracteres' : '';
-      case 'phone':
+      case 'phonenumber':
         return !/^\d{9,10}$/.test(value) ? 'El teléfono debe tener 9-10 dígitos' : '';
       case 'email':
         return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Email no válido' : '';
@@ -42,28 +41,26 @@ const ContactForm = ({ onAddContact }) => {
     }));
   };
 
-  useEffect(() => {
-    const hasErrors = Object.values(errors).some(error => error !== '');
-    const hasEmptyFields = Object.entries(formData).some(([key, value]) => 
-      key !== 'type' && value === ''
-    );
-    setIsFormValid(!hasErrors && !hasEmptyFields);
-  }, [formData, errors]);
+  const isFormValid = () => {
+    return !Object.values(errors).some(error => error !== '') &&
+           !Object.entries(formData).some(([key, value]) => key !== 'type' && value === '');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isFormValid) {
+    if (isFormValid()) {
       onAddContact(formData);
       setFormData({
-        name: '',
-        phone: '',
+        fullname: '',
+        phonenumber: '',
         email: '',
         type: 'personal'
       });
       setErrors({
-        name: '',
-        phone: '',
-        email: ''
+        fullname: '',
+        phonenumber: '',
+        email: '',
+        type: ''
       });
     }
   };
@@ -77,12 +74,12 @@ const ContactForm = ({ onAddContact }) => {
             <label htmlFor="name">Nombre Completo</label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="fullname"
+              name="fullname"
+              value={formData.fullname}
               onChange={handleChange}
               placeholder="Ingresa el nombre completo"
-              className={errors.name ? 'input-error' : ''}
+              className={errors.fullname ? 'input-error' : ''}
               required
             />
             {errors.name && <span className="error-message">{errors.name}</span>}
@@ -92,12 +89,12 @@ const ContactForm = ({ onAddContact }) => {
             <label htmlFor="phone">Teléfono</label>
             <input
               type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
+              id="phonenumber"
+              name="phonenumber"
+              value={formData.phonenumber}
               onChange={handleChange}
               placeholder="Ingresa el número de teléfono"
-              className={errors.phone ? 'input-error' : ''}
+              className={errors.phonenumber ? 'input-error' : ''}
               required
             />
             {errors.phone && <span className="error-message">{errors.phone}</span>}
@@ -127,17 +124,17 @@ const ContactForm = ({ onAddContact }) => {
               onChange={handleChange}
               required
             >
-              <option value="personal">Personal</option>
-              <option value="work">Trabajo</option>
-              <option value="family">Familia</option>
+              <option value="social">Social</option>
+              <option value="trabajo">Trabajo</option>
+              <option value="familia">Familia</option>
             </select>
           </div>
         </div>
         
         <button 
           type="submit" 
-          className={`submit-button ${!isFormValid ? 'button-disabled' : ''}`}
-          disabled={!isFormValid}
+          className={`submit-button ${!isFormValid() ? 'button-disabled' : ''}`}
+          disabled={!isFormValid()}
         >
           <span className="button-icon">💾</span>
           Guardar Contacto

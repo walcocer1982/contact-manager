@@ -11,19 +11,19 @@ const ContactList = ({ contacts, onSelectContact }) => {
 
   return (
     <div>
-      <h2>Contact List</h2>
+      <h2>Lista de Contactos</h2>
       <button onClick={toggleView}>
-        {isCardView ? 'Switch to List View' : 'Switch to Card View'}
+        {isCardView ? 'Cambiar a Vista Lista' : 'Cambiar a Vista Tarjeta'}
       </button>
       {isCardView ? (
         <div className="card-container">
           {contacts.map(contact => (
             <div key={contact.id} className="card">
-              <p>Name: {contact.name}</p>
-              <p>Phone: {contact.phone}</p>
+              <p>Nombre: {contact.fullname}</p>
+              <p>Teléfono: {contact.phonenumber}</p>
               <p>Email: {contact.email}</p>
-              <p>Type: {contact.type}</p>
-              <button onClick={() => onSelectContact(contact)}>Select</button>
+              <p>Tipo: {contact.type}</p>
+              <button onClick={() => onSelectContact(contact)}>Seleccionar</button>
             </div>
           ))}
         </div>
