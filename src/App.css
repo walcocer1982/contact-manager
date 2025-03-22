@@ -209,8 +209,9 @@
 /* Opción 1: Usando CSS Grid */
 .card-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  width: 100%;
 }
 
 /* Opción 2: Usando Flexbox */
@@ -228,10 +229,20 @@
 
 /* Asegúrate de que las tarjetas tengan una altura consistente */
 .contact-card {
-  height: 100%;
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 0.25rem;
+  border: 1px solid #3a4b5c;
+  border-radius: 6px;
+  background-color: #1e293b;
+  font-size: 0.9rem;
+}
+
+/* Puedes añadir un efecto hover para mejorar la interacción */
+.contact-card:hover {
+  border-color: #4b9cd3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilos para el layout de contactos con rutas anidadas */
@@ -280,11 +291,21 @@
   margin-top: 1rem;
 }
 
-.contact-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.contact-card h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.contact-card p {
+  margin: 0.1rem 0;
+  line-height: 1.2;
+  font-size: 0.85rem;
+}
+
+.contact-card .email,
+.contact-card .phone,
+.contact-card .type {
+  margin-bottom: 0.3rem;
 }
 
 /* Animaciones para las transiciones de páginas */
@@ -334,5 +355,374 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* Estilos para el botón de guardar y mensajes */
+.contacts-page-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+}
+
+.contacts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.save-button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.save-button:hover {
+  background-color: #059669;
+}
+
+.success-message {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s, fadeOut 0.5s 2.5s;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Añadir a tu archivo CSS */
+.storage-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.save-button, .load-button, .sync-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.save-button {
+  background-color: #10b981;
+  color: white;
+}
+
+.load-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.sync-button {
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #059669;
+}
+
+.load-button:hover {
+  background-color: #2563eb;
+}
+
+.sync-button:hover {
+  background-color: #7c3aed;
+}
+
+.sync-button:disabled {
+  background-color: #c4b5fd;
+  cursor: not-allowed;
+}
+
+.success-message {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s, fadeOut 0.5s 2.5s;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Estilos para el formulario - versión minimalista */
+.contact-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 5px;
+}
+
+.form-title {
+  color: #343a40;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.8rem;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input, 
+.form-select {
+  padding: 0.1rem;
+  margin-top: 0.1rem;
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.button-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.save-button {
+  padding: 0.7rem 1.2rem;
+  background-color: #4b6584;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+}
+
+/* Añadir responsividad */
+@media (max-width: 768px) {
+  .contact-form-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+/* Estilos simples para mejorar solo el espaciado vertical */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.8rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.7rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+button {
+  margin-top: 2rem;
+  padding: 0.7rem 1.2rem;
+  background-color: #4b6584;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+}
+
+/* Ajustar tamaño del texto de la información */
+.contact-card p {
+  margin: 0.1rem 0;
+  line-height: 1.2;
+  font-size: 0.85rem;
+}
+
+/* Asegurar que el container sea responsive */
+@media (max-width: 1200px) {
+  .card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ajustar el contenedor interno donde se encuentra el .card-container */
+.contacts-content, 
+.main-content {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Ajustar el contenedor principal para que sea más ancho */
+.app-container,
+.main-content {
+  max-width: 1200px !important; /* Aumentar el ancho máximo */
+  width: 100% !important;
+  margin: 0 auto !important; /* Centrar el contenido */
+  padding: 0 1rem !important;
+}
+
+/* Ajustar el contenedor específico de contactos */
+.contacts-layout,
+.contacts-content {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Ajustar el contenedor de tarjetas */
+.card-container {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important; /* 3 tarjetas por fila */
+  gap: 1rem !important;
+  width: 100% !important;
+}
+
+/* Para pantallas grandes, mostrar 4 tarjetas */
+@media (min-width: 1100px) {
+  .card-container {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* Asegurar que las tarjetas tengan un ancho apropiado */
+.contact-card {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Hacer que los contenedores tengan el mismo ancho y estén centrados */
+.app-container,
+.main-content,
+.contacts-layout,
+.contacts-content,
+.contacts-nav,
+.card-container {
+  max-width: 1200px !important; /* Ancho máximo consistente */
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important; /* Centrar horizontalmente */
+  box-sizing: border-box !important;
+}
+
+/* Asegurar que el contenedor de navegación (pestañas) tenga el mismo ancho */
+.contacts-nav {
+  width: 100% !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Contenedor principal */
+.main-content {
+  padding: 0 1rem !important; /* Padding horizontal para evitar que toque los bordes */
+}
+
+/* Pantallas más pequeñas */
+@media (max-width: 1200px) {
+  .app-container,
+  .main-content,
+  .contacts-layout,
+  .contacts-content,
+  .contacts-nav,
+  .card-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Reducir el ancho de los elementos de la lista */
+.list-item,
+.list-container > div,
+.contact-item {
+  max-width: 400px !important; /* Ancho máximo reducido */
+  width: 80% !important; /* Ocupar solo el 80% del ancho disponible */
+  margin-left: auto !important; /* Centrar horizontalmente */
+  margin-right: auto !important;
+  border: 1px solid rgba(58, 75, 92, 0.5) !important;
+  border-radius: 4px !important;
+}
+
+/* En pantallas más pequeñas, usar más ancho */
+@media (max-width: 900px) {
+  .list-item,
+  .list-container > div,
+  .contact-item {
+    width: 95% !important;
   }
 }
