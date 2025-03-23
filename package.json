@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.54.2",
-    "react-router-dom": "^7.4.0"
+    "react-router-dom": "^6.20.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -28,6 +28,6 @@
     "eslint-plugin-react-refresh": "^0.4.18",
     "flatrepo": "^1.2.0",
     "globals": "^15.14.0",
-    "vite": "^6.1.0"
+    "vite": "^5.0.0"
   }
 }

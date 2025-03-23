@@ -1,4 +1,4 @@
-const API_URL = 'https://entermocks.vercel.app/api/contacts';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getContacts = async () => {
   try {
@@ -18,30 +18,27 @@ export const getContacts = async () => {
   }
 };
 
-export const saveContact = async (contactData) => {
+export const saveContact = async (contact) => {
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(contactData)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(contact),
     });
-    
+
     if (!response.ok) {
-      throw new Error('Error al guardar contacto');
+      throw new Error('Error al guardar el contacto');
     }
-    
     return await response.json();
   } catch (error) {
-    console.error('Error en saveContact:', error);
+    console.error('Error:', error);
     throw error;
   }
 };
 
 export const getContactById = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/${id}`);
+    const response = await fetch(`${API_URL}/${Number(id)}`);
     if (!response.ok) {
       throw new Error('Error al obtener el contacto');
     }

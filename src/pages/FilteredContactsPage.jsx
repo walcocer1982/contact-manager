@@ -18,7 +18,7 @@ const FilteredContactsPage = () => {
         // Filtrar contactos según el tipo de la ruta
         if (type) {
           const filtered = allContacts.filter(contact => 
-            contact.type.toLowerCase() === type.toLowerCase()
+            contact.type?.toLowerCase() === type.toLowerCase()
           );
           setContacts(filtered);
         } else {

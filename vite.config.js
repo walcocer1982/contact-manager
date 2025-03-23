@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://enter-mockapi.vercel.app',
+        target: 'https://entermocks.vercel.app',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

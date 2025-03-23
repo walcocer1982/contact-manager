@@ -10,7 +10,7 @@ const ContactList = ({ contacts = [] }) => {
   };
 
   const handleContactClick = (contactId) => {
-    navigate(`/contacts/${contactId}`);
+    navigate(`/contact/${contactId}`);
   };
 
   return (

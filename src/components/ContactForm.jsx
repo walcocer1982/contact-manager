@@ -1,146 +1,102 @@
 import { useState } from 'react';
 
 const ContactForm = ({ onAddContact }) => {
-  const [formData, setFormData] = useState({
-    fullname: '',
-    phonenumber: '',
-    email: '',
-    type: 'social'
-  });
+  const [fullname, setFullname] = useState('');
+  const [phonenumber, setPhonenumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [type, setType] = useState('familia');
+  const [company, setCompany] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
-  const [errors, setErrors] = useState({
-    fullname: '',
-    phonenumber: '',
-    email: '',
-    type: ''
-  });
-
-  const validateField = (name, value) => {
-    switch (name) {
-      case 'fullname':
-        return value.length < 3 ? 'El nombre debe tener al menos 3 caracteres' : '';
-      case 'phonenumber':
-        return !/^\d{9,10}$/.test(value) ? 'El teléfono debe tener 9-10 dígitos' : '';
-      case 'email':
-        return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Email no válido' : '';
-      default:
-        return '';
-    }
+  const validate = () => {
+    const newErrors = {};
+    if (!fullname) newErrors.fullname = 'El nombre es obligatorio';
+    if (!phonenumber) newErrors.phonenumber = 'El teléfono es obligatorio';
+    if (!email) newErrors.email = 'El email es obligatorio';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-
-    setErrors(prevErrors => ({
-      ...prevErrors,
-      [name]: validateField(name, value)
-    }));
-  };
-
-  const isFormValid = () => {
-    return !Object.values(errors).some(error => error !== '') &&
-           !Object.entries(formData).some(([key, value]) => key !== 'type' && value === '');
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isFormValid()) {
-      onAddContact(formData);
-      setFormData({
-        fullname: '',
-        phonenumber: '',
-        email: '',
-        type: 'personal'
+    if (!validate()) return;
+
+    setIsSaving(true);
+
+    try {
+      const response = await fetch('https://entermocks.vercel.app/api/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fullname, phonenumber, email, type, company, birthday })
       });
-      setErrors({
-        fullname: '',
-        phonenumber: '',
-        email: '',
-        type: ''
-      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al guardar el contacto');
+      }
+
+      const newContact = await response.json();
+      onAddContact(newContact);
+
+      setFullname('');
+      setPhonenumber('');
+      setEmail('');
+      setType('familia');
+      setCompany('');
+      setBirthday('');
+      setErrors({});
+      setSubmitError('');
+    } catch (error) {
+      console.error('Error:', error);
+      setSubmitError(error.message);
+    } finally {
+      setIsSaving(false);
     }
   };
 
   return (
-    <div className="form-container">
-      <h2 className="form-title">Agregar Nuevo Contacto</h2>
-      <form onSubmit={handleSubmit} className="contact-form">
-        <div className="form-grid">
-          <div className="form-group">
-            <label htmlFor="name">Nombre Completo</label>
-            <input
-              type="text"
-              id="fullname"
-              name="fullname"
-              value={formData.fullname}
-              onChange={handleChange}
-              placeholder="Ingresa el nombre completo"
-              className={errors.fullname ? 'input-error' : ''}
-              required
-            />
-            {errors.name && <span className="error-message">{errors.name}</span>}
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="phone">Teléfono</label>
-            <input
-              type="tel"
-              id="phonenumber"
-              name="phonenumber"
-              value={formData.phonenumber}
-              onChange={handleChange}
-              placeholder="Ingresa el número de teléfono"
-              className={errors.phonenumber ? 'input-error' : ''}
-              required
-            />
-            {errors.phone && <span className="error-message">{errors.phone}</span>}
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Ingresa el correo electrónico"
-              className={errors.email ? 'input-error' : ''}
-              required
-            />
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="type">Tipo de Contacto</label>
-            <select
-              id="type"
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              required
-            >
-              <option value="social">Social</option>
-              <option value="trabajo">Trabajo</option>
-              <option value="familia">Familia</option>
-            </select>
-          </div>
-        </div>
-        
-        <button 
-          type="submit" 
-          className={`submit-button ${!isFormValid() ? 'button-disabled' : ''}`}
-          disabled={!isFormValid()}
-        >
-          <span className="button-icon">💾</span>
-          Guardar Contacto
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Nombre Completo:</label>
+        <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} />
+        {errors.fullname && <p>{errors.fullname}</p>}
+      </div>
+      <div>
+        <label>Teléfono:</label>
+        <input type="text" value={phonenumber} onChange={(e) => setPhonenumber(e.target.value)} />
+        {errors.phonenumber && <p>{errors.phonenumber}</p>}
+      </div>
+      <div>
+        <label>Email:</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        {errors.email && <p>{errors.email}</p>}
+      </div>
+      <div>
+        <label>Compañía:</label>
+        <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
+      </div>
+      <div>
+        <label>Cumpleaños:</label>
+        <input type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} />
+      </div>
+      <div>
+        <label>Tipo:</label>
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="familia">Familia</option>
+          <option value="social">Social</option>
+          <option value="trabajo">Trabajo</option>
+        </select>
+      </div>
+      <button type="submit" disabled={!fullname || !phonenumber || !email || Object.keys(errors).length > 0 || isSaving}>
+        {isSaving ? 'Guardando...' : 'Guardar'}
+      </button>
+      {submitError && <p className="error-message">{submitError}</p>}
+    </form>
   );
 };
 
